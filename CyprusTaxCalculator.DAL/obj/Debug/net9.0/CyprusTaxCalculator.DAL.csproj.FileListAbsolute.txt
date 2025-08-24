@@ -1,0 +1,14 @@
+/Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.DAL/bin/Debug/net9.0/CyprusTaxCalculator.DAL.deps.json
+/Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.DAL/bin/Debug/net9.0/CyprusTaxCalculator.DAL.runtimeconfig.json
+/Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.DAL/bin/Debug/net9.0/CyprusTaxCalculator.DAL.dll
+/Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.DAL/bin/Debug/net9.0/CyprusTaxCalculator.DAL.pdb
+/Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.DAL/obj/Debug/net9.0/CyprusTaxCalculator.DAL.csproj.AssemblyReference.cache
+/Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.DAL/obj/Debug/net9.0/CyprusTaxCalculator.DAL.GeneratedMSBuildEditorConfig.editorconfig
+/Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.DAL/obj/Debug/net9.0/CyprusTaxCalculator.DAL.AssemblyInfoInputs.cache
+/Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.DAL/obj/Debug/net9.0/CyprusTaxCalculator.DAL.AssemblyInfo.cs
+/Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.DAL/obj/Debug/net9.0/CyprusTaxCalculator.DAL.csproj.CoreCompileInputs.cache
+/Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.DAL/obj/Debug/net9.0/CyprusTaxCalculator.DAL.dll
+/Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.DAL/obj/Debug/net9.0/refint/CyprusTaxCalculator.DAL.dll
+/Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.DAL/obj/Debug/net9.0/CyprusTaxCalculator.DAL.pdb
+/Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.DAL/obj/Debug/net9.0/CyprusTaxCalculator.DAL.genruntimeconfig.cache
+/Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.DAL/obj/Debug/net9.0/ref/CyprusTaxCalculator.DAL.dll

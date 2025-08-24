@@ -1,0 +1,110 @@
+@page
+@model CyprusTaxCalculator.UI.Pages.AdvancedCalculatorModel
+@{
+    ViewData["Title"] = "Advanced Tax Calculator";
+}
+
+<h1>Advanced Tax Calculator</h1>
+
+<form id="advancedTaxForm" class="row g-3">
+    <h4>Income</h4>
+    <div class="col-md-4"><label>Income from Salary (€)</label><input type="number" class="form-control calc-input" id="salary" /></div>
+    <div class="col-md-4"><label>Self-Employed Annual Salary (€)</label><input type="number" class="form-control calc-input" id="selfEmployed" /></div>
+    <div class="col-md-4"><label>Gross Rents (€)</label><input type="number" class="form-control calc-input" id="grossRents" /></div>
+    <div class="col-md-4"><label>Income from Pension (€)</label><input type="number" class="form-control calc-input" id="pension" /></div>
+    <div class="col-md-4"><label>Widow's Pension (€)</label><input type="number" class="form-control calc-input" id="widowPension" /></div>
+    <div class="col-md-4"><label>Redeemed Life Insurance Policies (1–3 years) (€)</label><input type="number" class="form-control calc-input" id="redeemedLife13" /></div>
+    <div class="col-md-4"><label>Redeemed Life Insurance Policies (4–6 years) (€)</label><input type="number" class="form-control calc-input" id="redeemedLife46" /></div>
+    <div class="col-md-4"><label>Taxable Income from other sources (€)</label><input type="number" class="form-control calc-input" id="otherTaxable" /></div>
+    <div class="col-md-4"><label>Non-taxable income (€)</label><input type="number" class="form-control calc-input" id="nonTaxable" /></div>
+
+    <h4>Deductions</h4>
+    <div class="col-md-4"><label>Subscriptions to Unions/Professional Bodies (€)</label><input type="number" class="form-control calc-input" id="subscriptions" /></div>
+    <div class="col-md-4"><label>Donations to approved charities (€)</label><input type="number" class="form-control calc-input" id="donations" /></div>
+    <div class="col-md-4"><label>Capital allowances of rented properties (€)</label><input type="number" class="form-control calc-input" id="capitalAllowances" /></div>
+    <div class="col-md-4"><label>Interest paid on rented properties (€)</label><input type="number" class="form-control calc-input" id="interestRented" /></div>
+    <div class="col-md-4"><label>Expenses on rented buildings (€)</label><input type="number" class="form-control calc-input" id="expensesRented" /></div>
+    <div class="col-md-4"><label>Other deductions (€)</label><input type="number" class="form-control calc-input" id="otherDeductions" /></div>
+    <div class="col-md-4 form-check mt-4">
+        <input type="checkbox" class="form-check-input calc-input" id="firstTimeEmployed" />
+        <label class="form-check-label">First time to be employed in Cyprus</label>
+    </div>
+
+    <h4>Reductions/Exemptions</h4>
+    <div class="col-md-4"><label>Social Security Fund (€)</label><input type="number" class="form-control calc-input" id="socialSecurity" /></div>
+    <div class="col-md-4"><label>Medical Fund (€)</label><input type="number" class="form-control calc-input" id="medicalFund" /></div>
+    <div class="col-md-4"><label>Pension and Provident Funds (€)</label><input type="number" class="form-control calc-input" id="pensionFunds" /></div>
+    <div class="col-md-4"><label>GHS (€)</label><input type="number" class="form-control calc-input" id="ghs" /></div>
+    <div class="col-md-4"><label>Life Insurance Premiums (€)</label><input type="number" class="form-control calc-input" id="lifeInsurance" /></div>
+    <div class="col-md-4">
+        <label>Employment Type</label>
+        <select class="form-control calc-input" id="employmentType">
+            <option value="Employee">Employee</option>
+            <option value="SelfEmployed">Self-Employed</option>
+        </select>
+    </div>
+    <div class="col-md-4"><label>Amount available for Life Insurance (€)</label><input type="number" class="form-control calc-input" id="amountAvailableLife" /></div>
+</form>
+
+<hr />
+<div id="results" style="display:none;">
+    <h3>Results</h3>
+    <p><strong>Total Income:</strong> €<span id="totalIncome"></span></p>
+    <p><strong>Total Taxable Income:</strong> €<span id="totalTaxable"></span></p>
+    <p><strong>Total Deductions:</strong> €<span id="totalDeductions"></span></p>
+    <p><strong>Total Exemptions:</strong> €<span id="totalExemptions"></span></p>
+    <p><strong>Tax to be Deducted:</strong> €<span id="taxToDeduct"></span></p>
+</div>
+
+@section Scripts {
+<script>
+async function calculateTax() {
+    const data = {
+        salary: parseFloat(document.getElementById("salary").value) || 0,
+        selfEmployed: parseFloat(document.getElementById("selfEmployed").value) || 0,
+        grossRents: parseFloat(document.getElementById("grossRents").value) || 0,
+        pension: parseFloat(document.getElementById("pension").value) || 0,
+        widowPension: parseFloat(document.getElementById("widowPension").value) || 0,
+        redeemedLife13: parseFloat(document.getElementById("redeemedLife13").value) || 0,
+        redeemedLife46: parseFloat(document.getElementById("redeemedLife46").value) || 0,
+        otherTaxable: parseFloat(document.getElementById("otherTaxable").value) || 0,
+        nonTaxable: parseFloat(document.getElementById("nonTaxable").value) || 0,
+        subscriptions: parseFloat(document.getElementById("subscriptions").value) || 0,
+        donations: parseFloat(document.getElementById("donations").value) || 0,
+        capitalAllowances: parseFloat(document.getElementById("capitalAllowances").value) || 0,
+        interestRented: parseFloat(document.getElementById("interestRented").value) || 0,
+        expensesRented: parseFloat(document.getElementById("expensesRented").value) || 0,
+        otherDeductions: parseFloat(document.getElementById("otherDeductions").value) || 0,
+        firstTimeEmployed: document.getElementById("firstTimeEmployed").checked,
+        socialSecurity: parseFloat(document.getElementById("socialSecurity").value) || 0,
+        medicalFund: parseFloat(document.getElementById("medicalFund").value) || 0,
+        pensionFunds: parseFloat(document.getElementById("pensionFunds").value) || 0,
+        ghs: parseFloat(document.getElementById("ghs").value) || 0,
+        lifeInsurance: parseFloat(document.getElementById("lifeInsurance").value) || 0,
+        employmentType: document.getElementById("employmentType").value,
+        amountAvailableLife: parseFloat(document.getElementById("amountAvailableLife").value) || 0
+    };
+
+    const response = await fetch("/advanced-calculate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    });
+
+    if (!response.ok) return;
+
+    const result = await response.json();
+    document.getElementById("totalIncome").textContent = result.totalIncome.toFixed(2);
+    document.getElementById("totalTaxable").textContent = result.totalTaxableIncome.toFixed(2);
+    document.getElementById("totalDeductions").textContent = result.totalDeductions.toFixed(2);
+    document.getElementById("totalExemptions").textContent = result.totalExemptions.toFixed(2);
+    document.getElementById("taxToDeduct").textContent = result.taxToDeduct.toFixed(2);
+    document.getElementById("results").style.display = "block";
+}
+
+// Run calculation whenever an input changes
+document.querySelectorAll(".calc-input").forEach(input => {
+    input.addEventListener("input", calculateTax);
+});
+</script>
+}

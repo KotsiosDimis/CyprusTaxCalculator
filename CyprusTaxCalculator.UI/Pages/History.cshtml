@@ -1,0 +1,39 @@
+@page
+@model CyprusTaxCalculator.UI.Pages.HistoryModel
+
+<h2>Calculation History</h2>
+
+@if (Model.History.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date/Time</th>
+                <th>Annual Income</th>
+                <th>Life Insurance</th>
+                <th>Other Deductions</th>
+                <th>Taxable Income</th>
+                <th>Tax Payable</th>
+                <th>Tax Savings</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.History)
+        {
+            <tr>
+                <td>@item.Timestamp.ToString("g")</td>
+                <td>@item.AnnualIncome</td>
+                <td>@item.LifeInsurancePremiums</td>
+                <td>@item.OtherDeductions</td>
+                <td>@item.TaxableIncome</td>
+                <td>@item.TaxPayable</td>
+                <td>@item.TaxSavings</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No calculation history found.</p>
+}

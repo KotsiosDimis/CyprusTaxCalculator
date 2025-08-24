@@ -1,0 +1,75 @@
+﻿@page
+@model CyprusTaxCalculator.UI.Pages.IndexModel
+@{
+    ViewData["Title"] = "Cyprus Tax Calculator";
+}
+
+<h1>Cyprus Tax Calculator</h1>
+
+<form id="taxForm">
+    <div class="mb-3">
+        <label class="form-label">Annual Income (€)</label>
+        <input type="number" step="0.01" class="form-control calc-input" id="income" required />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Life Insurance Premiums Paid (€)</label>
+        <input type="number" step="0.01" class="form-control calc-input" id="life" required />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Other Deductions (€)</label>
+        <input type="number" step="0.01" class="form-control calc-input" id="other" required />
+    </div>
+</form>
+
+<hr />
+<div id="results" style="display:none;">
+    <h3>Results</h3>
+    <p><strong>Taxable Income:</strong> €<span id="taxable"></span></p>
+    <p><strong>Total Tax Payable:</strong> €<span id="tax"></span></p>
+    <p><strong>Tax Savings from Life Insurance:</strong> €<span id="savings"></span></p>
+</div>
+
+@section Scripts {
+<script>
+async function calculateTax() {
+    const income = parseFloat(document.getElementById("income").value) || 0;
+    const life = parseFloat(document.getElementById("life").value) || 0;
+    const other = parseFloat(document.getElementById("other").value) || 0;
+
+    // Only send request if at least one field has a value
+    if (income === 0 && life === 0 && other === 0) {
+        document.getElementById("results").style.display = "none";
+        return;
+    }
+
+    try {
+        const response = await fetch("/calculate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                AnnualIncome: income,
+                LifeInsurancePaid: life,
+                OtherDeductions: other
+            })
+        });
+
+        if (!response.ok) throw new Error("Failed to calculate tax");
+
+        const result = await response.json();
+
+        document.getElementById("taxable").textContent = result.taxableIncome.toFixed(2);
+        document.getElementById("tax").textContent = result.taxPayable.toFixed(2);
+        document.getElementById("savings").textContent = result.savings.toFixed(2);
+
+        document.getElementById("results").style.display = "block";
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
+
+// Listen for input changes on all calc-input fields
+document.querySelectorAll(".calc-input").forEach(input => {
+    input.addEventListener("input", calculateTax);
+});
+</script>
+}
