@@ -1,34 +1,67 @@
-# .gitignore for .NET/ASP.NET Core projects
-
-# Build results
-bin/
-obj/
-
-# User-specific files
-*.user
+# Solution / IDE
 *.suo
+*.user
 *.userosscache
 *.sln.docstates
-
-# VS Code settings
-.vscode/
-
-# Visual Studio files
 .vs/
+.vscode/
+.idea/
+_ReSharper*/
+*.DotSettings.user
 
-# OS generated files
+# Build + intermediate
+bin/
+obj/
+out/
+publish/
+*.pubxml
+*.publishproj
+*.Publish.xml
+
+# Test outputs / coverage
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+coverage/
+coverage.cobertura.xml
+lcov.info
+
+# Logs / temps
+*.log
+*.tlog
+*.tmp
+*.temp
+*.bak
+
+# Packages (rarely used now, but safe)
+packages/
+*.nupkg
+*.snupkg
+
+# Local DB / data files
+*.db
+*.sqlite
+*.mdf
+*.ldf
+
+# App secrets / local-only configs
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# Static Web Assets generated (already inside obj, but catch strays)
+**/staticwebassets*.json
+
+# Frontend tooling (if ever used)
+node_modules/
+dist/
+
+# OS junk
 .DS_Store
 Thumbs.db
 
-# Logs
-*.log
-
-# Database files
-*.db
-*.sqlite
-
-# Secrets and local configs
-appsettings.Development.json
-
-# Test results
-TestResults/
+# Security/scanning artifacts (your pipelines)
+reports/
+results/
+*.sarif
