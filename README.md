@@ -7,14 +7,14 @@ This case study showcases a full-stack ASP.NET Core web application that calcula
 
 ## ✅ Features
 
-- Calculate taxable income after deductions  
-- Apply official Cyprus tax brackets for 2025  
-- Deduct life insurance premiums (within legal limits)  
-- Display tax savings and total tax payable  
-- Dynamic UI with AJAX support (no page reload)  
-- Advanced mode for more complex scenarios (optional)  
-- Data storage using PostgreSQL  
-- Clean, modular 3-tier architecture  
+- Calculate taxable income after deductions  ✅
+- Apply official Cyprus tax brackets for 2025  ✅
+- Deduct life insurance premiums (within legal limits)  ✅
+- Display tax savings and total tax payable  ✅
+- Dynamic UI with AJAX support (no page reload)  ✅
+- Advanced mode for more complex scenarios (optional) ✅ 
+- Data storage using PostgreSQL  ✅
+- Clean, modular 3-tier architecture  ✅
 
 ---
 

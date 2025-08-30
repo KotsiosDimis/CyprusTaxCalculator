@@ -1,0 +1,13 @@
+<Project>
+  <PropertyGroup>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <!-- CI var is set by GitHub Actions -->
+    <TreatWarningsAsErrors Condition="'$(CI)'=='true'">true</TreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
+  </PropertyGroup>
+  <!-- Optional but recommended: StyleCop rules -->
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.507" PrivateAssets="all" />
+  </ItemGroup>
+</Project>

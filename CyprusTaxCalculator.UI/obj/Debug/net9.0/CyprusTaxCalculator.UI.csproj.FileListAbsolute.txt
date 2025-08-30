@@ -234,3 +234,4 @@
 /Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.UI/obj/Debug/net9.0/CyprusTaxCalculator.UI.pdb
 /Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.UI/obj/Debug/net9.0/CyprusTaxCalculator.UI.genruntimeconfig.cache
 /Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.UI/obj/Debug/net9.0/ref/CyprusTaxCalculator.UI.dll
+/Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.UI/obj/Debug/net9.0/CyprusTaxCalculator.UI.sourcelink.json

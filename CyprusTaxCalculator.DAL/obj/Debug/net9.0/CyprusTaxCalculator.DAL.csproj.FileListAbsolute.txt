@@ -12,3 +12,4 @@
 /Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.DAL/obj/Debug/net9.0/CyprusTaxCalculator.DAL.pdb
 /Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.DAL/obj/Debug/net9.0/CyprusTaxCalculator.DAL.genruntimeconfig.cache
 /Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.DAL/obj/Debug/net9.0/ref/CyprusTaxCalculator.DAL.dll
+/Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.DAL/obj/Debug/net9.0/CyprusTaxCalculator.DAL.sourcelink.json

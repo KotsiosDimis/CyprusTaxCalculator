@@ -13,3 +13,4 @@
 /Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.BLL/obj/Debug/net9.0/refint/CyprusTaxCalculator.BLL.dll
 /Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.BLL/obj/Debug/net9.0/CyprusTaxCalculator.BLL.pdb
 /Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.BLL/obj/Debug/net9.0/ref/CyprusTaxCalculator.BLL.dll
+/Users/konstandinosdimitriou/Documents/c#/CyprusTaxCalculator/CyprusTaxCalculator/CyprusTaxCalculator.BLL/obj/Debug/net9.0/CyprusTaxCalculator.BLL.sourcelink.json
