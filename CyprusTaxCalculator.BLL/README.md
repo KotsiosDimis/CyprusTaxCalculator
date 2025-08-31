@@ -1,21 +1,25 @@
-# CyprusTaxCalculator.BLL
+# Cyprus Tax Calculator – Business Logic Layer (BLL)
 
-Business Logic Layer for CyprusTaxCalculator.
+This project handles the tax calculation logic based on the Cyprus 2025 tax system. It includes:
 
-## Responsibilities
+- Deduction rules (life insurance, other deductions)
+- Progressive tax brackets
+- Clean separation of concerns
+- Fully testable service
 
-- Implements tax calculation logic.
-- Provides services for the UI to calculate tax and manage calculation history.
+## Features
 
-## Key Components
+- 20% cap on total deductions
+- Calculation of taxable income, total tax, and tax savings
+- Uses EF Core to fetch tax brackets
 
-- `Services/`: Contains service classes such as [`TaxCalculatorService`](Services/TaxCalculatorService.cs).
-- `Models/`: Contains business models like [`AdvancedTaxInput`](Models/AdvancedTaxInput.cs).
+## Folder Structure
 
-## Usage
+- `Models/` – Contains domain models like `TaxBracketTax`
+- `Services/` – Contains the `TaxCalculatorService` class
 
-This project is referenced by the UI project. No direct execution is required.
-
-## Dependencies
+## Requirements
 
 - .NET 9.0
+- EF Core
+- Connected to `CyprusTaxCalculator.DAL` for DB access

@@ -1,10 +1,7 @@
 using CyprusTaxCalculator.DAL.Data;
 using CyprusTaxCalculator.DAL.Entities;
 using CyprusTaxCalculator.BLL.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace CyprusTaxCalculator.BLL.Services
 {

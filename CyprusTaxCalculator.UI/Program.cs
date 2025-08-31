@@ -15,6 +15,7 @@ builder.Services.AddDbContext<TaxDbContext>(options =>
 // Register BLL services
 builder.Services.AddScoped<TaxCalculatorService>();
 
+
 // Add Razor Pages
 builder.Services.AddRazorPages();
 
