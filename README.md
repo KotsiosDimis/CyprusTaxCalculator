@@ -124,3 +124,7 @@ MIT License
 ## 🙌 Acknowledgments
 
 Made with care for the **Cyprus 2025 Tax Directive Case Study** 🌍
+
+![.NET CI](https://github.com/<you>/<repo>/actions/workflows/dotnet-ci.yml/badge.svg)
+![CodeQL](https://github.com/<you>/<repo>/actions/workflows/codeql.yml/badge.svg)
+![Dependency-Check](https://github.com/<you>/<repo>/actions/workflows/dependency-check.yml/badge.svg)

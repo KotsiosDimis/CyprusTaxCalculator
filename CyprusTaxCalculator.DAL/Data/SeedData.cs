@@ -1,16 +1,22 @@
+using CyprusTaxCalculator.DAL.Data;
 using CyprusTaxCalculator.DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 
-namespace CyprusTaxCalculator.DAL.Data
+namespace CyprusTaxCalculator.DAL
 {
+    /// <summary>
+    /// Provides initial data for the database, such as tax brackets and deduction rules.
+    /// </summary>
     public static class SeedData
     {
         public static void Initialize(TaxDbContext context)
         {
-            // Only seed if tables are empty
+            context.Database.Migrate();
+
             if (!context.TaxBrackets.Any())
             {
                 context.TaxBrackets.AddRange(
-                    new TaxBracket { MinIncome = 0, MaxIncome = 19500, Rate = 0.00m },
+                    new TaxBracket { MinIncome = 0, MaxIncome = 19500, Rate = 0m },
                     new TaxBracket { MinIncome = 19501, MaxIncome = 28000, Rate = 0.20m },
                     new TaxBracket { MinIncome = 28001, MaxIncome = 36300, Rate = 0.25m },
                     new TaxBracket { MinIncome = 36301, MaxIncome = 60000, Rate = 0.30m },
@@ -20,14 +26,9 @@ namespace CyprusTaxCalculator.DAL.Data
 
             if (!context.DeductionRules.Any())
             {
-                context.DeductionRules.Add(
-                    new DeductionRule
-                    {
-                        DeductionType = "LifeInsurance",
-                        LimitType = "Amount",
-                        LimitValue = 1200m // Max €1200/year allowed
-                    }
-                );
+               // context.DeductionRules.AddRange(
+              //      new DeductionRule { DeductionType = "LifeInsurance", LimitValue = 1200m }
+              //  );
             }
 
             context.SaveChanges();

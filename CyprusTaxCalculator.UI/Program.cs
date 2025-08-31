@@ -14,7 +14,6 @@ builder.Services.AddDbContext<TaxDbContext>(options =>
 
 // Register BLL services
 builder.Services.AddScoped<TaxCalculatorService>();
-builder.Services.AddScoped<AdvancedTaxCalculatorService>();
 
 // Add Razor Pages
 builder.Services.AddRazorPages();
@@ -67,17 +66,7 @@ app.MapPost("/calculate", ([FromBody] TaxInput input, TaxCalculatorService taxSe
     });
 });
 
-// Minimal API for advanced calculator
-app.MapPost("/advanced-calculate", ([FromBody] AdvancedTaxInput input, AdvancedTaxCalculatorService taxService) =>
-{
-    if (input == null)
-    {
-        return Results.BadRequest("Invalid input");
-    }
 
-    var result = taxService.Calculate(input);
-    return Results.Json(result);
-});
 
 app.Run();
 

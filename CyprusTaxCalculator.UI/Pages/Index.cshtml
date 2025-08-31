@@ -4,103 +4,161 @@
     ViewData["Title"] = "Cyprus Tax Calculator";
 }
 
-<h1>Cyprus Tax Calculator</h1>
+<div class="container py-4">
+    <h1 class="text-center mb-4">Cyprus Tax Calculator</h1>
 
-<form id="taxForm">
-    <div class="mb-3">
-        <label class="form-label">Annual Income (€)</label>
-        <input type="number" step="0.01" class="form-control calc-input" id="income" required />
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Life Insurance Premiums Paid (€)</label>
-        <input type="number" step="0.01" class="form-control calc-input" id="life" required />
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Other Deductions (€)</label>
-        <input type="number" step="0.01" class="form-control calc-input" id="other" required />
-    </div>
-</form>
+    <div class="row gy-4">
+        <!-- Left column: Inputs -->
+        <div class="col-12 col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Income & Deductions</h5>
 
-<hr />
-<div id="results" style="display:none;">
-    <h3>Results</h3>
-    <p><strong>Taxable Income:</strong> €<span id="taxable"></span></p>
-    <p><strong>Total Tax Payable:</strong> €<span id="tax"></span></p>
-    <p><strong>Tax Savings from Life Insurance:</strong> €<span id="savings"></span></p>
+                    <div class="mb-3">
+                        <label class="form-label">Annual Income (€)</label>
+                        <input type="text" class="form-control calc-input" id="income" inputmode="decimal" data-raw="0" />
+                    </div>
 
-    <div id="breakdown-section" style="margin-top: 30px;">
-        <h4>Tax Breakdown by Bracket</h4>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Income from (€)</th>
-                    <th>Income to (€)</th>
-                    <th>Rate (%)</th>
-                    <th>Taxed Amount (€)</th>
-                    <th>Tax (€)</th>
-                </tr>
-            </thead>
-            <tbody id="breakdown-body">
-                <!-- Rows added by JS -->
-            </tbody>
-        </table>
+                    <div class="mb-3">
+                        <label class="form-label">Life Insurance Premiums Paid (€)</label>
+                        <input type="text" class="form-control calc-input" id="life" inputmode="decimal" data-raw="0" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Other Deductions (€)</label>
+                        <input type="text" class="form-control calc-input" id="other" inputmode="decimal" data-raw="0" />
+                        <p><p><small class="text-muted">
+                            Note: Combined deductions (Life Insurance + Other) are capped at 1/5 of total annual income under Cyprus tax law.
+                            </small></p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right column: Results -->
+        <div class="col-12 col-lg-6">
+            <div class="card shadow-sm" id="results">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Results</h5>
+
+                    <ul class="list-group list-group-flush mb-3">
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Taxable Income</span>
+                            <strong>€<span id="taxable">0</span></strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Total Tax Payable</span>
+                            <strong>€<span id="tax">0</span></strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Life Insurance Savings</span>
+                            <strong>€<span id="savings">0</span></strong>
+                        </li>
+                    </ul>
+
+                    <h6 class="mt-4">Tax Breakdown by Bracket</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-sm">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Income from (€)</th>
+                                    <th>Income to (€)</th>
+                                    <th>Rate (%)</th>
+                                    <th>Taxed Amount (€)</th>
+                                    <th>Tax (€)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="breakdown-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 @section Scripts {
 <script>
-async function calculateTax() {
-    const income = parseFloat(document.getElementById("income").value) || 0;
-    const life = parseFloat(document.getElementById("life").value) || 0;
-    const other = parseFloat(document.getElementById("other").value) || 0;
-
-    if (income === 0 && life === 0 && other === 0) {
-        document.getElementById("results").style.display = "none";
-        return;
+    function formatNumberWithSpaces(value) {
+        return value.toLocaleString('fr-FR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
     }
 
-    try {
-        const response = await fetch("/Index", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                AnnualIncome: income,
-                LifeInsurancePaid: life,
-                OtherDeductions: other
-            })
-        });
-
-        if (!response.ok) throw new Error("Failed to calculate tax");
-
-        const result = await response.json();
-
-        document.getElementById("taxable").textContent = result.taxableIncome.toFixed(2);
-        document.getElementById("tax").textContent = result.taxPayable.toFixed(2);
-        document.getElementById("savings").textContent = result.savings.toFixed(2);
-
-        const breakdownBody = document.getElementById("breakdown-body");
-        breakdownBody.innerHTML = "";
-
-        result.breakdown.forEach(bracket => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${bracket.lowerLimit.toFixed(2)}</td>
-                <td>${bracket.upperLimit !== null ? bracket.upperLimit.toFixed(2) : 'And up'}</td>
-                <td>${(bracket.rate * 100).toFixed(2)}%</td>
-                <td>${bracket.taxedAmount.toFixed(2)}</td>
-                <td>${bracket.tax.toFixed(2)}</td>
-            `;
-            breakdownBody.appendChild(row);
-        });
-
-        document.getElementById("results").style.display = "block";
-    } catch (error) {
-        console.error("Error:", error);
+    function formatInputValue(value) {
+        let numeric = value.replace(/[^\d.]/g, '').replace(/^0+/, '');
+        const parts = numeric.split('.');
+        const intPart = parts[0] || '0';
+        const decimalPart = parts[1] ? parts[1].slice(0, 2) : '';
+        const formattedInt = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        return decimalPart ? `${formattedInt}.${decimalPart}` : formattedInt;
     }
-}
 
-document.querySelectorAll(".calc-input").forEach(input => {
-    input.addEventListener("input", calculateTax);
-});
+    function parseRaw(value) {
+        return parseFloat(value.replace(/ /g, '')) || 0;
+    }
+
+    function handleInputFormat(e) {
+        const input = e.target;
+        const formatted = formatInputValue(input.value);
+        input.value = formatted;
+        input.dataset.raw = parseRaw(formatted);
+        calculateTax();
+    }
+
+    function blockInvalidChars(e) {
+        if (['e', 'E', '+', '-'].includes(e.key)) {
+            e.preventDefault();
+        }
+    }
+
+    document.querySelectorAll(".calc-input").forEach(input => {
+        input.addEventListener("input", handleInputFormat);
+        input.addEventListener("keydown", blockInvalidChars);
+    });
+
+    async function calculateTax() {
+        const income = parseFloat(document.getElementById("income").dataset.raw) || 0;
+        const life = parseFloat(document.getElementById("life").dataset.raw) || 0;
+        const other = parseFloat(document.getElementById("other").dataset.raw) || 0;
+
+        try {
+            const response = await fetch("/Index", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    AnnualIncome: income,
+                    LifeInsurancePaid: life,
+                    OtherDeductions: other
+                })
+            });
+
+            if (!response.ok) throw new Error("Failed to calculate tax");
+
+            const result = await response.json();
+
+            document.getElementById("taxable").textContent = formatNumberWithSpaces(result.taxableIncome);
+            document.getElementById("tax").textContent = formatNumberWithSpaces(result.taxPayable);
+            document.getElementById("savings").textContent = formatNumberWithSpaces(result.savings);
+
+            const breakdownBody = document.getElementById("breakdown-body");
+            breakdownBody.innerHTML = "";
+
+            result.breakdown.forEach(bracket => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${formatNumberWithSpaces(bracket.lowerLimit)}</td>
+                    <td>${bracket.upperLimit !== null ? formatNumberWithSpaces(bracket.upperLimit) : 'And up'}</td>
+                    <td>${(bracket.rate * 100).toFixed(2)}%</td>
+                    <td>${formatNumberWithSpaces(bracket.taxedAmount)}</td>
+                    <td>${formatNumberWithSpaces(bracket.tax)}</td>
+                `;
+                breakdownBody.appendChild(row);
+            });
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
 </script>
 }

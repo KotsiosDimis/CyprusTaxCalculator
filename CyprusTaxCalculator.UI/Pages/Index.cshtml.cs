@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using CyprusTaxCalculator.BLL.Services;
-using CyprusTaxCalculator.BLL.Models;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace CyprusTaxCalculator.UI.Pages
 {
