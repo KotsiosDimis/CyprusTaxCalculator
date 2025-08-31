@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using CyprusTaxCalculator.BLL.Services;
+using CyprusTaxCalculator.BLL.Models;
+using System.Collections.Generic;
 
-namespace CyprusTaxCalculator.UI.Pages.Api
+/*namespace CyprusTaxCalculator.UI.Pages.Api
 {
     [IgnoreAntiforgeryToken] // disable CSRF for API
     public class CalculateModel : PageModel
@@ -21,11 +23,21 @@ namespace CyprusTaxCalculator.UI.Pages.Api
 
             var result = _taxService.CalculateTax(input.AnnualIncome, input.LifeInsurancePaid, input.OtherDeductions);
 
+            var breakdown = _taxService.GetTaxBreakdown(result.taxableIncome);
+
             return new JsonResult(new
             {
                 taxableIncome = result.taxableIncome,
                 taxPayable = result.taxPayable,
-                savings = result.savings
+                savings = result.savings,
+                breakdown = breakdown.Select(b => new
+                {
+                    lowerLimit = b.LowerLimit,
+                    upperLimit = b.UpperLimit,
+                    rate = b.Rate,
+                    taxedAmount = b.TaxedAmount,
+                    tax = b.Tax
+                })
             });
         }
 
@@ -36,4 +48,4 @@ namespace CyprusTaxCalculator.UI.Pages.Api
             public decimal OtherDeductions { get; set; }
         }
     }
-}
+}*/

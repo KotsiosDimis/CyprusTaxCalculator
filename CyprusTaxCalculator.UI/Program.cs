@@ -4,6 +4,7 @@ using System.Diagnostics;
 using CyprusTaxCalculator.BLL.Services;
 using Microsoft.AspNetCore.Mvc;
 using CyprusTaxCalculator.BLL.Models; // AdvancedTaxInput lives here
+using CyprusTaxCalculator.DAL; // This gives access to SeedData
 
 var builder = WebApplication.CreateBuilder(args);
 

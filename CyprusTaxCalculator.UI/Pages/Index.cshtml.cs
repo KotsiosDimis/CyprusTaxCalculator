@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using CyprusTaxCalculator.BLL.Services;
-using System.Threading.Tasks;
+using CyprusTaxCalculator.BLL.Models;
+using System.Collections.Generic;
 
 namespace CyprusTaxCalculator.UI.Pages
 {
+    [IgnoreAntiforgeryToken]
     public class IndexModel : PageModel
     {
         private readonly TaxCalculatorService _taxService;
@@ -14,37 +16,35 @@ namespace CyprusTaxCalculator.UI.Pages
             _taxService = taxService;
         }
 
-        [BindProperty]
-        public decimal AnnualIncome { get; set; }
-
-        [BindProperty]
-        public decimal LifeInsurancePaid { get; set; }
-
-        [BindProperty]
-        public decimal OtherDeductions { get; set; }
-
-        public decimal TaxableIncome { get; set; }
-        public decimal TaxPayable { get; set; }
-        public decimal Savings { get; set; }
-        public bool Calculated { get; set; } = false;
-
-        public async Task OnPostAsync()
+        public IActionResult OnPost([FromBody] TaxInput input)
         {
-            var result = _taxService.CalculateTax(AnnualIncome, LifeInsurancePaid, OtherDeductions);
-            TaxableIncome = result.taxableIncome;
-            TaxPayable = result.taxPayable;
-            Savings = result.savings;
-            Calculated = true;
+            if (input == null)
+                return BadRequest("Invalid input");
 
-            // Save calculation history
-            await _taxService.SaveCalculationResultAsync(
-                AnnualIncome,
-                LifeInsurancePaid,
-                OtherDeductions,
-                TaxableIncome,
-                TaxPayable,
-                Savings
-            );
+            var result = _taxService.CalculateTax(input.AnnualIncome, input.LifeInsurancePaid, input.OtherDeductions);
+            var breakdown = _taxService.GetTaxBreakdown(result.taxableIncome);
+
+            return new JsonResult(new
+            {
+                taxableIncome = result.taxableIncome,
+                taxPayable = result.taxPayable,
+                savings = result.savings,
+                breakdown = breakdown.Select(b => new
+                {
+                    lowerLimit = b.LowerLimit,
+                    upperLimit = b.UpperLimit,
+                    rate = b.Rate,
+                    taxedAmount = b.TaxedAmount,
+                    tax = b.Tax
+                })
+            });
+        }
+
+        public class TaxInput
+        {
+            public decimal AnnualIncome { get; set; }
+            public decimal LifeInsurancePaid { get; set; }
+            public decimal OtherDeductions { get; set; }
         }
     }
 }
