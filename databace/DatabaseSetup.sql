@@ -18,6 +18,14 @@ CREATE TABLE IF NOT EXISTS "UserCalculationHistory" (
     "TaxSavings" NUMERIC(18,2)
 );
 
+-- Table: DeductionPolicy (for storing dynamic cap values)
+CREATE TABLE IF NOT EXISTS "DeductionPolicy" (
+    "Id" SERIAL PRIMARY KEY,
+    "Name" TEXT NOT NULL UNIQUE,                -- e.g., 'TotalDeductionCap'
+    "CapPercentage" NUMERIC(5,2) NOT NULL,      -- e.g., 20.00
+    "Description" TEXT
+);
+
 -- Seed: TaxBrackets (Cyprus 2025)
 INSERT INTO "TaxBrackets" ("LowerLimit", "UpperLimit", "Rate") VALUES
     (0, 19500, 0.00),
@@ -27,5 +35,7 @@ INSERT INTO "TaxBrackets" ("LowerLimit", "UpperLimit", "Rate") VALUES
     (60000.01, NULL, 35.00)
 ON CONFLICT ("LowerLimit", "UpperLimit", "Rate") DO NOTHING;
 
--- Note: You can drop DeductionRules table since max amounts are now based on income, not static limits
-DROP TABLE IF EXISTS "DeductionRules";
+-- Seed: DeductionPolicy
+INSERT INTO "DeductionPolicy" ("Name", "CapPercentage", "Description") VALUES
+    ('TotalDeductionCap', 20.00, 'Max Life + Other deductions as % of income')
+ON CONFLICT ("Name") DO NOTHING;

@@ -23,8 +23,13 @@ namespace CyprusTaxCalculator.BLL.Services
             lifeInsurancePaid = Math.Max(lifeInsurancePaid, 0);
             otherDeductions = Math.Max(otherDeductions, 0);
 
-            // Cap total deductions to 1/5 of income
-            decimal maxTotalDeductions = annualIncome / 5;
+            // 🔁 Get "TotalCap" rule from database (e.g., 20%)
+            var capRule = _context.DeductionRules
+                .FirstOrDefault(r => r.DeductionType == "TotalCap" && r.LimitType == "Percentage");
+
+            decimal capPercentage = capRule?.LimitValue ?? 20.00m; // Fallback to 20% if missing
+            decimal maxTotalDeductions = annualIncome * (capPercentage / 100m);
+
             decimal totalRequested = lifeInsurancePaid + otherDeductions;
 
             decimal allowedLife = lifeInsurancePaid;

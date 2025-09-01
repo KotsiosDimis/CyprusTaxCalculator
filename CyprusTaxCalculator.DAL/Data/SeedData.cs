@@ -25,11 +25,16 @@ namespace CyprusTaxCalculator.DAL
             }
 
             if (!context.DeductionRules.Any())
-            {
-               // context.DeductionRules.AddRange(
-              //      new DeductionRule { DeductionType = "LifeInsurance", LimitValue = 1200m }
-              //  );
-            }
+                {
+                    context.DeductionRules.AddRange(
+                        new DeductionRule
+                        {
+                            DeductionType = "TotalCap",
+                            LimitType = "Percentage",
+                            LimitValue = 20.00m
+                        }
+                    );
+                }
 
             context.SaveChanges();
         }
